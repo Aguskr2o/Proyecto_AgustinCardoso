@@ -32,6 +32,9 @@ function Solicitar_telefono() {
             console.log("precio:", this.precio);
             console.log("categoria", this.categoria);
         }
+        get_precio () {
+            return this.precio
+        }
     }
 
     //Verduleria//
@@ -51,6 +54,9 @@ function Solicitar_telefono() {
     let zanahoria = new Producto("zanahoria", 225, "Verduras");
     let zapallito = new Producto("zapallito", 219, "Verduras");
 
+    let productos_verduleria = [acelga, batata, berenjena, brocoli, calabaza, cebolla, coliflor, espinaca, lechuga, palta, papa, rucula, tomate,zanahoria,zapallito];
+
+
     //Fruteria//
     let banana = new Producto("banana", 169, "Frutas");
     let limon = new Producto("limon", 99, "Frutas");
@@ -60,6 +66,9 @@ function Solicitar_telefono() {
     let pera = new Producto("pera", 169, "Frutas");
     let pomelo = new Producto("pomelo", 135, "Frutas");
     let uva = new Producto("uva", 349, "Frutas");
+
+    let productos_fruteria = [banana, limon, mandarina, manzana, naranja, pera, pomelo, uva];
+
 
     //Almacen//
     let arroz = new Producto("arroz", 94, "Almacen");
@@ -75,6 +84,10 @@ function Solicitar_telefono() {
     let miel = new Producto("miel", 504, "Almacen");
     let galletitas = new Producto("galletitas", 200, "Almacen");
 
+    let productos_almacen = [arroz, harina, fideos, azucar, cacao, cafe, te, yerba, dulce_de_leche, mermelada, miel, galletitas];
+
+
+
     //Bebidas//
     let agua = new Producto("agua", 94, "Bebidas");
     let gaseosa = new Producto("gaseosa", 209, "Bebidas");
@@ -83,14 +96,20 @@ function Solicitar_telefono() {
     let cerveza_lata = new Producto("cerveza_lata", 250, "Bebidas");
     let vino_promedio = new Producto("vino_promedio", 500, "Bebidas");
 
+    let productos_bebidas = [agua, gaseosa, jugos, soda, cerveza_lata, vino_promedio];
+
+
     //Limpieza//
     let desengrasante = new Producto("desengrasante", 135, "Limpieza");
     let detergente = new Producto("detergente", 750, "Limpieza");
     let esponja = new Producto("esponja", 135, "Limpieza");
-    let Jabon_ropa = new Producto("Jabon ropa", 870, "Limpieza");
+    let jabon_ropa = new Producto("Jabon ropa", 870, "Limpieza");
     let lavandina = new Producto("lavandina", 75, "Limpieza");
     let liquido_pisos = new Producto("liquido para pisos", 208, "Limpieza");
     let suavizante = new Producto("suavizante", 650, "Limpieza");
+
+    let productos_limpieza = [desengrasante, detergente, esponja, jabon_ropa, lavandina, liquido_pisos, suavizante];
+
 
     //Baño//
     let acondicionador = new Producto("acondicionador", 753, "Baño");
@@ -100,6 +119,10 @@ function Solicitar_telefono() {
     let papel_higienico = new Producto("papel higienico", 307, "Baño");
     let shampoo = new Producto("shampoo", 629, "Baño");
 
+    let productos_baño = [acondicionador, dentifrico, desodorante, jabon_tocador, papel_higienico, shampoo];
+
+
+
     //Lacteos//
     let leche = new Producto("leche", 188, "Lacteos");
     let crema = new Producto("crema", 342, "Lacteos");
@@ -107,31 +130,40 @@ function Solicitar_telefono() {
     let queso = new Producto("queso", 500, "Lacteos");
     let yogurt = new Producto("yogurt", 290, "Lacteos");
 
+    let productos_lacteos = [leche, crema, manteca, queso, yogurt];
+
+
+
     //Carne//
     let cerdo = new Producto("cerdo", 650, "Carne");
     let pollo = new Producto("pollo", 550, "Carne");
     let merluza = new Producto("merluza", 750, "Carne");
-    let res = new Producto("res", "el rosquete", "Carne");
+    let res = new Producto("res", 1000, "Carne");
 
+    let productos_carne = [cerdo, pollo, merluza, res];
 
    
    
     let lista = []
 
+    let precio_compra = 0;
+
     function agregar_a_lista(Producto) {
         lista.push(Producto);
+        precio_compra += Producto.get_precio();
 
     }
 
 
+//PRUEBA DE CARRITO CLIENTE y //ACUMULADOR DE PRECIO APROX DE COMPRA
+    agregar_a_lista(merluza);
+    agregar_a_lista(acondicionador);
+    agregar_a_lista(papel_higienico);
+    agregar_a_lista(yerba);
+    console.log(lista);
+    console.log(precio_compra);
 
 
 
-
-    
-agregar_a_lista(merluza);
-agregar_a_lista(acondicionador);
-console.log(lista);
-
-Solicitar_nombre()
-Solicitar_telefono()
+// Solicitar_nombre()
+// Solicitar_telefono()
