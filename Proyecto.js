@@ -156,14 +156,23 @@ function Solicitar_telefono() {
 
 
 //PRUEBA DE CARRITO CLIENTE y //ACUMULADOR DE PRECIO APROX DE COMPRA
-    agregar_a_lista(merluza);
-    agregar_a_lista(acondicionador);
-    agregar_a_lista(papel_higienico);
-    agregar_a_lista(yerba);
-    console.log(lista);
-    console.log(precio_compra);
+// agregar_a_lista(merluza);
+// agregar_a_lista(acondicionador);
+// agregar_a_lista(papel_higienico);
+// agregar_a_lista(yerba);
+// console.log(lista);
+// console.log(precio_compra);
 
 
 
 // Solicitar_nombre()
 // Solicitar_telefono()
+
+
+let todos_los_productos = [acelga, batata, berenjena, brocoli, calabaza, cebolla, coliflor, espinaca, lechuga, palta, papa, rucula, tomate, zanahoria, zapallito, banana, limon, mandarina, manzana, naranja, pera, pomelo, uva, arroz, harina, fideos, azucar, cacao, cafe, te, yerba, dulce_de_leche, mermelada, miel, galletitas, agua, gaseosa, jugos, soda, cerveza_lata, vino_promedio, desengrasante, detergente, esponja, jabon_ropa, lavandina, liquido_pisos, suavizante, acondicionador, dentifrico, desodorante, jabon_tocador, papel_higienico, shampoo, leche, crema, manteca, queso, yogurt, cerdo, pollo, merluza, res];
+
+var busqueda_usuario = prompt("ingrese su busqueda");
+
+
+let search = todos_los_productos.filter((producto) => producto.nombre.includes(busqueda_usuario));
+console.log(search);
