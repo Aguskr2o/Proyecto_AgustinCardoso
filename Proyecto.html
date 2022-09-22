@@ -42,6 +42,10 @@
             </div>
         </div>
 
+        <div class="col-12 d-flex justify-content-center align-items-center mt-5">
+            <input type="search" id="search" placeholder="Nombre del producto..." onchange="buscarProductos(event)"> 
+        </div>
+
     </div>
     <div id="mensaje"></div>
     <br>
@@ -156,15 +160,15 @@
 
     <!-- acumulador de items-->
     <div class="form-floating mt-2">
-        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-        <label for="floatingTextarea">Aqui se guardaran tus elecciones</label>
+        <textarea class="form-control" placeholder="Leave a comment here" id="listaTextArea"></textarea>
+        <label for="listaTextArea">Aqui se guardaran tus elecciones</label>
 
     </div>
 
 
     <div class="form-floating mt-2">
-        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-        <label for="floatingTextarea">El valor estimado de tu compra es de..</label>
+        <textarea class="form-control" placeholder="Leave a comment here" id="precioTextarea"></textarea>
+        <label for="precioTextarea">El valor estimado de tu compra es de..</label>
     </div>
 
 

@@ -1,22 +1,21 @@
 let usuarioDePrueba = "Agus";
 let telefonoDePrueba = 123;
-
+let mensaje = document.getElementById('mensaje');
 
 
 function saludar(){
     let usuario = document.getElementById("nombre_usuario");
     let numero_usuario = document.getElementById("telefono_usuario");
-    let mensaje = document.getElementById("mensaje");
 
     console.log("el usuario es", usuario.value);
     console.log("el telefono es", numero_usuario.value);
 
-    if(usuario.value == usuarioDePrueba && numero_usuario.value == telefonoDePrueba){
-        // console.log("bienvendido al sistema");
-        let parrafo = document.createElement("p")
-        parrafo.innerText = "Bienvenido al sistema";
+    guardarUsuario(usuario.value,numero_usuario.value)
 
-        mensaje.append(parrafo);
+    if(usuario.value == usuarioDePrueba && numero_usuario.value == telefonoDePrueba){
+        if (checkearParrafo('saludo') == false){
+        crearParrafoBienvenida();
+    }
     }
     else{
         mensaje.innerText = "ERROR, USUARIO o TELEFONO INCORRECTO";
@@ -24,12 +23,44 @@ function saludar(){
     }
 }
 
+function recuperarUsuario(){
+    let usuario = localStorage.getItem("usuario");
+    let numero = localStorage.getItem("numero");
+    
+    let inputUsuario = document.getElementById("nombre_usuario");
+    let inputNumeroUsuario = document.getElementById("telefono_usuario");
+
+    inputUsuario.value = usuario;
+    inputNumeroUsuario.value = numero;
+}
+
+function guardarUsuario(usuario,numero){
+    localStorage.setItem("usuario", usuario);
+    localStorage.setItem("numero", numero);
+}
+
+function crearParrafoBienvenida(){
+    let parrafo = document.createElement("p");
+    parrafo.setAttribute("id", "saludo");
+    parrafo.innerText = "Bienvenido al sistema";
+    mensaje.append(parrafo);
+}
+
+function checkearParrafo(idNombre){
+    let parrafo = document.getElementById(idNombre);
+if(parrafo){
+    return true;
+} else{
+    return false;
+}
+}
 
 
 
 
 
 
+recuperarUsuario();
 
 class Producto {
     constructor(nombre, precio, categoria) {
@@ -49,8 +80,6 @@ class Producto {
         return this.precio;
     }
 }
-
-
 
 
 //Verduleria//
@@ -155,31 +184,45 @@ let productos_carnes = [cerdo, pollo, merluza, res];
 
 
 
-
 let lista = []
 let precio_compra = 0;
 
 function agregar_a_lista(Producto) {
     lista.push(Producto);
     precio_compra += Producto.get_precio();
+    const listaTextArea = document.getElementById("listaTextArea");
+    const nombresProductos = lista.map((producto) => producto.nombre);
+    listaTextArea.value = nombresProductos.join(", ");
+
+    const precioTextarea = document.getElementById("precioTextarea");
+    precioTextarea.value = `$ ${precio_compra}`;
 
 }
 
 
 
 //PRUEBA DE CARRITO CLIENTE y //ACUMULADOR DE PRECIO APROX DE COMPRA
-agregar_a_lista(merluza);
-agregar_a_lista(acondicionador);
-agregar_a_lista(papel_higienico);
-agregar_a_lista(yerba);
-console.log(lista);
-console.log(precio_compra);
+// agregar_a_lista(merluza);
+// agregar_a_lista(acondicionador);
+// agregar_a_lista(papel_higienico);
+// agregar_a_lista(yerba);
+// console.log(lista);
+// console.log(precio_compra);
 
 
 
 
 let todos_los_productos = [acelga, batata, berenjena, brocoli, calabaza, cebolla, coliflor, espinaca, lechuga, palta, papa, rucula, tomate, zanahoria, zapallito, banana, limon, mandarina, manzana, naranja, pera, pomelo, uva, arroz, harina, fideos, azucar, cacao, cafe, te, yerba, dulce_de_leche, mermelada, miel, galletitas, agua, gaseosa, jugos, soda, cerveza_lata, vino_promedio, desengrasante, detergente, esponja, jabon_ropa, lavandina, liquido_pisos, suavizante, acondicionador, dentifrico, desodorante, jabon_tocador, papel_higienico, shampoo, leche, crema, manteca, queso, yogurt, cerdo, pollo, merluza, res];
 
+const buscarProductos = (event) => {
+    event.preventDefault();
+    const name = event.target.value;
+    if(name.length >= 3){
+        const productosFiltrados = todos_los_productos.filter((producto) => producto.nombre.includes(name));
+        console.log('EVENT => ', event.target.value)
+        console.log('PRODUCTOS FILTRADOS ', productosFiltrados);
+    }
+}
 // var busqueda_usuario = prompt("ingrese su busqueda");
 
 
@@ -195,6 +238,10 @@ productos_verduleria.map(producto => {
     let item_verduras = document.createElement("li");
 
     item_verduras.innerText = producto.nombre;
+
+    item_verduras.addEventListener("click", () => {
+        agregar_a_lista(producto)        
+    })
     
     lista_verduras.appendChild(item_verduras);
     
@@ -207,6 +254,12 @@ productos_fruteria.map(producto => {
     let item_frutas = document.createElement("li");
 
     item_frutas.innerText = producto.nombre;
+    
+    lista_frutas.appendChild(item_frutas);
+
+    item_frutas.addEventListener("click", () => {
+        agregar_a_lista(producto)        
+    })
     
     lista_frutas.appendChild(item_frutas);
     
@@ -235,6 +288,12 @@ productos_bebidas.map(producto => {
     
     lista_bebidas.appendChild(item_bebidas);
     
+    item_bebidas.addEventListener("click", () => {
+        agregar_a_lista(producto)        
+    })
+    
+    lista_bebidas.appendChild(item_bebidas);
+    
 
 }) 
 
@@ -244,6 +303,12 @@ productos_limpieza.map(producto => {
     let item_limpieza = document.createElement("li");
 
     item_limpieza.innerText = producto.nombre;
+    
+    lista_limpieza.appendChild(item_limpieza);
+
+    item_limpieza.addEventListener("click", () => {
+        agregar_a_lista(producto)        
+    })
     
     lista_limpieza.appendChild(item_limpieza);
     
@@ -258,6 +323,12 @@ productos_baño.map(producto => {
     item_baño.innerText = producto.nombre;
     
     lista_baño.appendChild(item_baño);
+
+    item_baño.addEventListener("click", () => {
+        agregar_a_lista(producto)        
+    })
+    
+    lista_baño.appendChild(item_baño);
     
 
 }) 
@@ -270,6 +341,12 @@ productos_lacteos.map(producto => {
     item_lacteos.innerText = producto.nombre;
     
     lista_lacteos.appendChild(item_lacteos);
+
+    item_lacteos.addEventListener("click", () => {
+        agregar_a_lista(producto)        
+    })
+    
+    lista_lacteos.appendChild(item_lacteos);
     
 
 }) 
@@ -280,6 +357,12 @@ productos_carnes.map(producto => {
     let item_carnes = document.createElement("li");
 
     item_carnes.innerText = producto.nombre;
+    
+    lista_carnes.appendChild(item_carnes);
+
+    item_carnes.addEventListener("click", () => {
+        agregar_a_lista(producto)        
+    })
     
     lista_carnes.appendChild(item_carnes);
     
