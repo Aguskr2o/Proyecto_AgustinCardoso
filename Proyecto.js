@@ -15,11 +15,14 @@ function saludar(){
     if(usuario.value == usuarioDePrueba && numero_usuario.value == telefonoDePrueba){
         if (checkearParrafo('saludo') == false){
         crearParrafoBienvenida();
-    }
-    }
-    else{
-        mensaje.innerText = "ERROR, USUARIO o TELEFONO INCORRECTO";
-
+        }
+    }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Usuario incorrecto o invalido!',
+          footer: 'Reintentar loggin'
+        })
     }
 }
 
@@ -197,6 +200,14 @@ function agregar_a_lista(Producto) {
     const precioTextarea = document.getElementById("precioTextarea");
     precioTextarea.value = `$ ${precio_compra}`;
 
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `Agregaste ${Producto.nombre} al carrito `,
+        showConfirmButton: false,
+        timer: 2000
+      })
+
 }
 
 
@@ -217,17 +228,14 @@ let todos_los_productos = [acelga, batata, berenjena, brocoli, calabaza, cebolla
 const buscarProductos = (event) => {
     event.preventDefault();
     const name = event.target.value;
+    
+    
     if(name.length >= 3){
         const productosFiltrados = todos_los_productos.filter((producto) => producto.nombre.includes(name));
         console.log('EVENT => ', event.target.value)
         console.log('PRODUCTOS FILTRADOS ', productosFiltrados);
     }
 }
-// var busqueda_usuario = prompt("ingrese su busqueda");
-
-
-// let search = todos_los_productos.filter((producto) => producto.nombre.includes(busqueda_usuario));
-// console.log(search);
 
 
 // Agregar listas a categorias
@@ -273,6 +281,12 @@ productos_almacen.map(producto => {
     let item_almacen = document.createElement("li");
 
     item_almacen.innerText = producto.nombre;
+    
+    lista_almacen.appendChild(item_almacen);
+   
+    item_almacen.addEventListener("click", () => {
+        agregar_a_lista(producto)        
+    })
     
     lista_almacen.appendChild(item_almacen);
     
