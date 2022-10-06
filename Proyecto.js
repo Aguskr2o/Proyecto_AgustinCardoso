@@ -1,18 +1,18 @@
-let usuarioDePrueba = "Agus";
-let telefonoDePrueba = 123;
 let mensaje = document.getElementById('mensaje');
 
 
-function saludar(){
-    let usuario = document.getElementById("nombre_usuario");
-    let numero_usuario = document.getElementById("telefono_usuario");
+async function saludar(){
+    let usuarioInput = document.getElementById("nombre_usuario");
+    let numeroUsuarioInput = document.getElementById("telefono_usuario");
 
-    console.log("el usuario es", usuario.value);
-    console.log("el telefono es", numero_usuario.value);
+    // console.log("el usuario es", usuarioInput.value);
+    // console.log("el telefono es", numeroUsuarioInput.value);
 
-    guardarUsuario(usuario.value,numero_usuario.value)
+    guardarUsuario(usuarioInput.value,numeroUsuarioInput.value);
+    const response = await fetch("./Usuario.json");
+    const { usuario } = await response.json();
 
-    if(usuario.value == usuarioDePrueba && numero_usuario.value == telefonoDePrueba){
+    if(usuarioInput.value == usuario.nombre && numeroUsuarioInput.value == usuario.telefono){
         if (checkearParrafo('saludo') == false){
         crearParrafoBienvenida();
         }
