@@ -43,10 +43,7 @@ function guardarUsuario(usuario,numero){
 }
 
 function crearParrafoBienvenida(){
-    let parrafo = document.createElement("p");
-    parrafo.setAttribute("id", "saludo");
-    parrafo.innerText = "Bienvenido al sistema";
-    mensaje.append(parrafo);
+    Swal.fire('Bienvenido al sistema!')
 }
 
 function checkearParrafo(idNombre){
@@ -57,11 +54,6 @@ if(parrafo){
     return false;
 }
 }
-
-
-
-
-
 
 recuperarUsuario();
 
@@ -141,8 +133,8 @@ let agua = new Producto("agua", 94, "Bebidas");
 let gaseosa = new Producto("gaseosa", 209, "Bebidas");
 let jugos = new Producto("jugos", 131, "Bebidas");
 let soda = new Producto("soda", 133, "Bebidas");
-let cerveza_lata = new Producto("cerveza_lata", 250, "Bebidas");
-let vino_promedio = new Producto("vino_promedio", 500, "Bebidas");
+let cerveza_lata = new Producto("cerveza de lata", 250, "Bebidas");
+let vino_promedio = new Producto("vino promedio", 500, "Bebidas");
 
 let productos_bebidas = [agua, gaseosa, jugos, soda, cerveza_lata, vino_promedio];
 
@@ -178,24 +170,25 @@ let yogurt = new Producto("yogurt", 290, "Lacteos");
 let productos_lacteos = [leche, crema, manteca, queso, yogurt];
 
 //Carne//
-let cerdo = new Producto("cerdo", 650, "Carne");
-let pollo = new Producto("pollo", 550, "Carne");
-let merluza = new Producto("merluza", 750, "Carne");
-let res = new Producto("res", "el rosquete", "Carne");
+let cerdo = new Producto("cerdo", 900, "Carne");
+let pollo = new Producto("pollo", 800, "Carne");
+let merluza = new Producto("merluza", 1000, "Carne");
+let res = new Producto("res", 1200, "Carne");
 
 let productos_carnes = [cerdo, pollo, merluza, res];
 
 
 
-let lista = []
+let lista = [];
 let precio_compra = 0;
 
 function agregar_a_lista(Producto) {
     lista.push(Producto);
+    localStorage.setItem("lista", JSON.stringify(lista));
     precio_compra += Producto.get_precio();
     const listaTextArea = document.getElementById("listaTextArea");
-    const nombresProductos = lista.map((producto) => producto.nombre);
-    listaTextArea.value = nombresProductos.join(", ");
+    const datoProductos = lista.map((producto) => (producto.nombre + " $ " + producto.precio));
+    listaTextArea.value = datoProductos.join(", ");
 
     const precioTextarea = document.getElementById("precioTextarea");
     precioTextarea.value = `$ ${precio_compra}`;
@@ -220,22 +213,118 @@ function agregar_a_lista(Producto) {
 // console.log(lista);
 // console.log(precio_compra);
 
+let todos_los_productos = [
+    acelga,
+    batata,
+    berenjena,
+    brocoli,
+    calabaza,
+    cebolla,
+    coliflor,
+    espinaca,
+    lechuga,
+    palta,
+    papa,
+    rucula,
+    tomate,
+    zanahoria,
+    zapallito,
+    banana,
+    limon,
+    mandarina,
+    manzana,
+    naranja,
+    pera,
+    pomelo,
+    uva,
+    arroz,
+    harina,
+    fideos,
+    azucar,
+    cacao,
+    cafe,
+    te,
+    yerba,
+    dulce_de_leche,
+    mermelada,
+    miel,
+    galletitas,
+    agua,
+    gaseosa,
+    jugos,
+    soda,
+    cerveza_lata,
+    vino_promedio,
+    desengrasante,
+    detergente,
+    esponja,
+    jabon_ropa,
+    lavandina,
+    liquido_pisos,
+    suavizante,
+    acondicionador,
+    dentifrico,
+    desodorante,
+    jabon_tocador,
+    papel_higienico,
+    shampoo,
+    leche,
+    crema,
+    manteca,
+    queso,
+    yogurt,
+    cerdo,
+    pollo,
+    merluza,
+    res,
+  ];
+  
 
 
-
-let todos_los_productos = [acelga, batata, berenjena, brocoli, calabaza, cebolla, coliflor, espinaca, lechuga, palta, papa, rucula, tomate, zanahoria, zapallito, banana, limon, mandarina, manzana, naranja, pera, pomelo, uva, arroz, harina, fideos, azucar, cacao, cafe, te, yerba, dulce_de_leche, mermelada, miel, galletitas, agua, gaseosa, jugos, soda, cerveza_lata, vino_promedio, desengrasante, detergente, esponja, jabon_ropa, lavandina, liquido_pisos, suavizante, acondicionador, dentifrico, desodorante, jabon_tocador, papel_higienico, shampoo, leche, crema, manteca, queso, yogurt, cerdo, pollo, merluza, res];
-
-const buscarProductos = (event) => {
+const cleanSearch = () => {
+    const searchInput = document.getElementById("search");
+    searchInput.value = "";
+    let search_container = document.getElementById("search_container");
+    search_container.innerHTML = "";
+    search_container.style.display = "none";
+  };
+  
+  const buscarProductos = (event) => {
     event.preventDefault();
     const name = event.target.value;
-    
-    
-    if(name.length >= 3){
-        const productosFiltrados = todos_los_productos.filter((producto) => producto.nombre.includes(name));
-        console.log('EVENT => ', event.target.value)
-        console.log('PRODUCTOS FILTRADOS ', productosFiltrados);
+  
+    if (name.length >= 3) {
+      const productosFiltrados = todos_los_productos.filter((producto) =>
+        producto.nombre.includes(name)
+      );
+  
+      let search_container = document.getElementById("search_container");
+      search_container.innerHTML = "";
+      
+      if (productosFiltrados.length > 0) {
+        search_container.style.display = "block";
+      }
+  
+      productosFiltrados.map((producto) => {
+        let item = document.createElement("li");
+  
+        item.innerText = producto.nombre + " $ " +producto.precio;
+  
+        search_container.appendChild(item);
+  
+        item.addEventListener("click", () => {
+          agregar_a_lista(producto);
+          cleanSearch();
+        });
+  
+        search_container.appendChild(item);
+      });
+    } else {
+      let search_container = document.getElementById("search_container");
+      search_container.innerHTML = "";
+      search_container.style.display = "none";
     }
-}
+  };
 
 
 // Agregar listas a categorias
@@ -245,7 +334,7 @@ let lista_verduras = document.getElementById("dropdown_verduras")
 productos_verduleria.map(producto => {
     let item_verduras = document.createElement("li");
 
-    item_verduras.innerText = producto.nombre;
+    item_verduras.innerText = producto.nombre + " $ " +producto.precio;
 
     item_verduras.addEventListener("click", () => {
         agregar_a_lista(producto)        
@@ -261,7 +350,7 @@ let lista_frutas = document.getElementById("dropdown_frutas")
 productos_fruteria.map(producto => {
     let item_frutas = document.createElement("li");
 
-    item_frutas.innerText = producto.nombre;
+    item_frutas.innerText = producto.nombre + " $ " +producto.precio;
     
     lista_frutas.appendChild(item_frutas);
 
@@ -280,7 +369,7 @@ let lista_almacen = document.getElementById("dropdown_almacen")
 productos_almacen.map(producto => {
     let item_almacen = document.createElement("li");
 
-    item_almacen.innerText = producto.nombre;
+    item_almacen.innerText = producto.nombre + " $ " +producto.precio;
     
     lista_almacen.appendChild(item_almacen);
    
@@ -298,7 +387,7 @@ let lista_bebidas = document.getElementById("dropdown_bebidas")
 productos_bebidas.map(producto => {
     let item_bebidas = document.createElement("li");
 
-    item_bebidas.innerText = producto.nombre;
+    item_bebidas.innerText = producto.nombre + " $ " +producto.precio;
     
     lista_bebidas.appendChild(item_bebidas);
     
@@ -316,7 +405,7 @@ let lista_limpieza = document.getElementById("dropdown_limpieza")
 productos_limpieza.map(producto => {
     let item_limpieza = document.createElement("li");
 
-    item_limpieza.innerText = producto.nombre;
+    item_limpieza.innerText = producto.nombre + " $ " +producto.precio;
     
     lista_limpieza.appendChild(item_limpieza);
 
@@ -334,7 +423,7 @@ let lista_baño = document.getElementById("dropdown_baño")
 productos_baño.map(producto => {
     let item_baño = document.createElement("li");
 
-    item_baño.innerText = producto.nombre;
+    item_baño.innerText = producto.nombre + " $ " +producto.precio;
     
     lista_baño.appendChild(item_baño);
 
@@ -352,7 +441,7 @@ let lista_lacteos = document.getElementById("dropdown_lacteos")
 productos_lacteos.map(producto => {
     let item_lacteos = document.createElement("li");
 
-    item_lacteos.innerText = producto.nombre;
+    item_lacteos.innerText = producto.nombre + " $ " +producto.precio;
     
     lista_lacteos.appendChild(item_lacteos);
 
@@ -370,7 +459,7 @@ let lista_carnes = document.getElementById("dropdown_carnes")
 productos_carnes.map(producto => {
     let item_carnes = document.createElement("li");
 
-    item_carnes.innerText = producto.nombre;
+    item_carnes.innerText = producto.nombre + " $ " +producto.precio;
     
     lista_carnes.appendChild(item_carnes);
 
@@ -382,4 +471,15 @@ productos_carnes.map(producto => {
     
 
 }) 
+
+
+let send = document.getElementById("send");
+
+function enviar(){
+    Swal.fire(
+        'Listo!',
+        'Tu lista de compras te llegara por whatsapp',
+        'success'
+      )
+}
 
